@@ -1,0 +1,65 @@
+import './Home.css';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+    export default function AllGuides() {
+
+        const [guides, setGuides] = useState([]);
+
+        useEffect(() => {
+            function getGuides() {
+                axios.get("http://localhost:8070/Guide/").then((res) => {
+                    setGuides(res.data);
+                }).catch((err) => {
+                    alert(err.message);
+                })
+            }
+            getGuides();
+        }, [guides])
+
+    return(
+
+    <div className="container">
+    <section className="section about-section gray-bg" id="about">
+        <p className="text-center font-weight-bold display-6 font-italic text-success" >Find Your Tourist Guide Here...</p>
+    {guides && guides.map(guide => (
+        <div className="row align-items-center justify-content-around flex-row-reverse">
+            <div className="col-lg-7">
+                <div className="about-text">
+                    <h4></h4>
+                <hr/>
+                    <h5 className="theme-color">{h.fname} {h.lname}</h5>
+                    <h6 className="dark-color" style={{color:"black"}}></h6><h6 class="dark-color">Address: {h.address}</h6>
+                    <h6 className="dark-color">E-mail:   {h.email}</h6>
+                    <h6 className="dark-color">Contact No:   {h.phone}</h6>
+                    <h6 className="dark-color">Registration No:   {h.registration_number}</h6>
+                    <h6 className="dark-color">Type:   {h.gtype}</h6>
+                    <h6 className="dark-color">Description:{h.description}</h6>                  
+                    <div className="btn-bar">
+                    <Link to={"update/"+h._id}><button  className='btn btn-warning'>Contact Now</button></Link>
+                    </div>
+                </div>
+            </div>
+            <div className="col-lg-4 text-center ">
+                <div className="about-img">
+                    <img className='photo' src={process.env.PUBLIC_URL+"imageveiw.png"}/>
+                </div>
+            </div>
+        </div>
+   
+
+))}
+</section>
+
+                    <div className="btn-bar">
+                        <a className="px-btn theme" href="/add">Register as a Guide</a>
+                    </div>
+ </div>
+
+
+
+        
+    )
+  }
